@@ -13,7 +13,7 @@ class Url extends Model
     protected static function boot(){
         parent::boot();
         static::creating(function($url){
-$url->short_url=Str::random();
+$url->short_url=Str::random(6);
         });
     }
 

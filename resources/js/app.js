@@ -27,6 +27,7 @@ Vue.component('main-component', require('./Main.vue').default);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+ Vue.use(require("bridge-vue-notification"));
 const app = new Vue({
     el: '#app',
 });

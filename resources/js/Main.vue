@@ -1,7 +1,9 @@
 <template>
   
 <div>
+  
     <app-header/>
+         <bridge-notify />
     <div class="">
 
         <Index/>

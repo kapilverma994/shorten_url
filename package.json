@@ -39,5 +39,8 @@
   "bugs": {
     "url": "https://github.com/kapilverma994/shorten_url/issues"
   },
-  "homepage": "https://github.com/kapilverma994/shorten_url#readme"
+  "homepage": "https://github.com/kapilverma994/shorten_url#readme",
+  "dependencies": {
+    "bridge-vue-notification": "^1.1.2"
+  }
 }

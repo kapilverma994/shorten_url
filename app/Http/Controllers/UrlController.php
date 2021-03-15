@@ -50,7 +50,8 @@ class UrlController extends Controller
      */
     public function show(Url $url)
     {
-        return $url;
+        $url->increment('visit');
+        return redirect($url->original_url);
     }
 
     /**

@@ -4,7 +4,7 @@
 <h2>Shorten Your big Url</h2>
 <form @submit.prevent="submit">
     <input type="text" class="p-2 border shadow p-3 mb-5 bg-white rounded w-25" v-model="original_url" placeholder="Enter big url">
-    <i @click="submit" class="fa fa-paper-plane text-danger fa-2x" style="curson:pointer" aria-hidden="true">
+    <i @click="submit" class="fa fa-paper-plane text-danger fa-2x" style="cursor:pointer" aria-hidden="true">
 
 
 
@@ -18,14 +18,21 @@
     <tr>
     <th>Big Url</th>
     <th>Short Url</th>
+    <th>Visits</th>
     <th>Created At</th>
+    <th>Action</th>
     </tr>
 </thead>
 <tbody>
     <tr  v-for="item in items" :key="item.id">
         <td>{{item.original_url}}</td>
-        <td>{{item.short_url}}</td>
+        <td>
+            <a :href="item.short_url" style="text-decoration:none" class="text-dark" target="_blank">
+            {{item.short_url}}<i class="fa fa-external-link ml-2" aria-hidden="true"></i></a>
+            </td>
+            <td>{{item.visit}}</td>
         <td>{{item.created_at}}</td>
+        <td><i @click="destroy(item)" class="fa fa-times text-danger fa-2x" style="cursor:pointer" aria-hidden="true"></i></td>
     </tr>
 </tbody>
     </table>
@@ -63,6 +70,12 @@ this.fetchData();
       this.original_url="";
       console.log(res.data);
    this.items.unshift(res.data);
+     this.$notify({
+          message: "Created Successfully 😍",
+          duration: 3000,
+          position: 'center',
+      
+        });
   }).catch((e)=>{
     this.errors=e.response.data.errors;
   })
@@ -74,6 +87,22 @@ this.fetchData();
             }).catch((e)=>{
                 this.errors=e.response.data;
             });
+        },
+        destroy(item){
+            if(confirm("Are You Sure ?")){
+        axios.delete(`api/url/${item.short_url}`).then(()=>{
+                this.items= this.items.filter(i=>i.id!=item.id);
+            });
+               this.$notify({
+          message: "Deleted Successfully 😍",
+          duration: 3000,
+   
+          position: 'center',
+      
+        });
+            }
+    
+
         }
     }
 }
