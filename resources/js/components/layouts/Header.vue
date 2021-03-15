@@ -8,6 +8,14 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
+        <div v-if="loggedin">
+           <li class="nav-item active">
+          <a class="nav-link" href="/logout">Logout</a>
+          <!-- <a class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a> -->
+        </li>
+
+        </div>
+        <div v-else>
         <li class="nav-item active">
           <router-link class="nav-link" to="/login">Login</router-link>
           <!-- <a class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a> -->
@@ -16,15 +24,24 @@
                 <router-link class="nav-link" to="/register">Register</router-link>
           <!-- <a class="nav-link" href="/register">Register</a> -->
         </li>
+        </div>
     
       </ul>
       
     </div>
   </nav>
   </template>
-  <script>
-      export default {  }
-  </script>
+ <script>
+ export default {
+   data(){
+     return {
+       loggedin:window.loggedin 
+     };
+   }
+ }
+ </script>
+
+
   <style >
   .custom_nav a{
       font-size: 24px;
