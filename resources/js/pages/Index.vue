@@ -3,7 +3,7 @@
 <div class="text-center mt-5">
 <h2>Shorten Your big Url</h2>
 <form @submit.prevent="submit">
-    <input type="text" class="p-2 border shadow p-3 mb-5 bg-white rounded w-25" v-model="original_url" placeholder="Enter big url">
+    <input type="text" class="p-2 border shadow p-3 mb-5 bg-white rounded w-25" v-model="original_url" placeholder="Paste Your Big Url">
     <i @click="submit" class="fa fa-paper-plane text-danger fa-2x" style="cursor:pointer" aria-hidden="true">
 
 
@@ -15,7 +15,7 @@
 <section class="mt-2 container p-5 ">
     <table class="table table-bordered">
 <thead>
-    <tr>
+    <tr class="">
     <th>Big Url</th>
     <th>Short Url</th>
     <th>Visits</th>
@@ -25,9 +25,13 @@
 </thead>
 <tbody>
     <tr  v-for="item in items" :key="item.id">
-        <td>{{item.original_url}}</td>
         <td>
-            <a :href="item.short_url" style="text-decoration:none" class="text-dark" target="_blank">
+          
+            {{item.original_url}}
+           
+            </td>
+        <td>
+            <a :href="item.path" style="text-decoration:none" class="text-dark" target="_blank">
             {{item.short_url}}<i class="fa fa-external-link ml-2" aria-hidden="true"></i></a>
             </td>
             <td>{{item.visit}}</td>

@@ -13,8 +13,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('{url}','UrlController@show');
+Route::get('u/{url}','UrlController@show');
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::view("{url}","Welcome");
+Route::post('/register','Auth\RegisterController@register');
+Route::post('/login','Auth\LoginController@login');

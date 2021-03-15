@@ -1,5 +1,5 @@
 <template>
-<footer class="fixed-bottom text-center bg-primary "> <h4 class="pt-2">Copyright&#169;2021</h4></footer>
+<footer class="fixed-bottom text-center bg-dark text-white "> <h5 class="pt-2">Copyright&#169;2021</h5></footer>
    
 </template>
 <script>

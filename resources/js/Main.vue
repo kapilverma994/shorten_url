@@ -5,8 +5,8 @@
     <app-header/>
          <bridge-notify />
     <div class="">
-
-        <Index/>
+ <router-view></router-view>
+        <!-- <Index/> -->
     </div>
  <app-footer/>
   
@@ -15,9 +15,9 @@
 <script>
  import  AppHeader  from "./components/layouts/Header";
       import AppFooter  from "./components/layouts/Footer";
-       import Index  from "./pages/Index";  
+    //    import Index  from "./pages/Index";  
 export default {
-    components:{AppHeader,AppFooter,Index}
+    components:{AppHeader,AppFooter}
    
 };
 </script>i

@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 class Url extends Model
 {
     protected $fillable=['original_url','short_url'];
-
+protected $appends=['path'];
     protected static function boot(){
         parent::boot();
         static::creating(function($url){
@@ -26,6 +26,10 @@ $url->short_url=Str::random(6);
     {
         return Carbon::parse($value)->diffForHumans();
     }
+     public function getPathAttribute(){
+return asset("u/$this->short_url");
+     }
+    
 
 
 
