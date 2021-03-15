@@ -12,13 +12,29 @@
 </form>
 <span class="text-danger" style="font-size:20px" v-if="errors.original_url"> {{errors.original_url[0]}}</span>
 </div>
-<section class="mt-5">
-<div  v-for="item in items" :key="item.id">
+<section class="mt-2 container p-5 ">
+    <table class="table table-bordered">
+<thead>
+    <tr>
+    <th>Big Url</th>
+    <th>Short Url</th>
+    <th>Created At</th>
+    </tr>
+</thead>
+<tbody>
+    <tr  v-for="item in items" :key="item.id">
+        <td>{{item.original_url}}</td>
+        <td>{{item.short_url}}</td>
+        <td>{{item.created_at}}</td>
+    </tr>
+</tbody>
+    </table>
+<!-- <div  v-for="item in items" :key="item.id">
    <p>{{item.original_url}}</p> 
    <p>{{item.short_url}}</p> 
 
 
-</div>
+</div> -->
 </section>
     </div>
     
@@ -35,6 +51,9 @@ export default {
           items:[]
       };
   },
+  mounted(){
+this.fetchData();
+  },    
     methods:{
         submit(){
              if(this.original_url=="")
@@ -43,10 +62,18 @@ export default {
   .then((res)=> {
       this.original_url="";
       console.log(res.data);
-   this.items.push(res.data.data);
+   this.items.unshift(res.data);
   }).catch((e)=>{
     this.errors=e.response.data.errors;
   })
+        },
+        fetchData(){
+            axios.get('api/url').then((res)=>{
+               
+                this.items=res.data;
+            }).catch((e)=>{
+                this.errors=e.response.data;
+            });
         }
     }
 }

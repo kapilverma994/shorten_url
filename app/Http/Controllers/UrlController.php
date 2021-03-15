@@ -15,7 +15,8 @@ class UrlController extends Controller
      */
     public function index()
     {
-     return Url::latest()->get();
+     $url= Url::latest()->get();
+     return response($url);
     }
 
     /**
@@ -37,8 +38,8 @@ class UrlController extends Controller
     public function store(UrlRequest $request)
     {
     
-      $item=  Url::create($request->all()); 
-        return response()->json(['status'=>true,'msg'=>'created','data'=>$item]);
+      $url=  Url::create($request->all()); 
+        return response($url,200);
     }
 
     /**
@@ -84,7 +85,7 @@ class UrlController extends Controller
     public function destroy(Url $url)
     {
       $url->delete();
-      return response()->json(['status'=>true,'msg'=>'delete']);
+      return response('delete');
         
     }
 }

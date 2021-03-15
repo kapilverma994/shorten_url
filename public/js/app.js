@@ -2021,6 +2021,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2028,6 +2044,9 @@ __webpack_require__.r(__webpack_exports__);
       errors: {},
       items: []
     };
+  },
+  mounted: function mounted() {
+    this.fetchData();
   },
   methods: {
     submit: function submit() {
@@ -2040,9 +2059,18 @@ __webpack_require__.r(__webpack_exports__);
         _this.original_url = "";
         console.log(res.data);
 
-        _this.items.push(res.data);
+        _this.items.unshift(res.data);
       })["catch"](function (e) {
         _this.errors = e.response.data.errors;
+      });
+    },
+    fetchData: function fetchData() {
+      var _this2 = this;
+
+      axios.get('api/url').then(function (res) {
+        _this2.items = res.data;
+      })["catch"](function (e) {
+        _this2.errors = e.response.data;
       });
     }
   }
@@ -38399,8 +38427,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "footer",
-      { staticClass: "fixed-bottom text-center bg-primary" },
-      [_c("h1", [_vm._v("i m footer")])]
+      { staticClass: "fixed-bottom text-center bg-primary " },
+      [_c("h4", { staticClass: "pt-2" }, [_vm._v("Copyright©2021")])]
     )
   }
 ]
@@ -38565,21 +38593,43 @@ var render = function() {
         : _vm._e()
     ]),
     _vm._v(" "),
-    _c(
-      "section",
-      { staticClass: "mt-5" },
-      _vm._l(_vm.items, function(item) {
-        return _c("div", { key: item.id }, [
-          _c("p", [_vm._v(_vm._s(item.original_url))]),
-          _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(item.short_url))])
-        ])
-      }),
-      0
-    )
+    _c("section", { staticClass: "mt-2 container p-5 " }, [
+      _c("table", { staticClass: "table table-bordered" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.items, function(item) {
+            return _c("tr", { key: item.id }, [
+              _c("td", [_vm._v(_vm._s(item.original_url))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(item.short_url))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(item.created_at))])
+            ])
+          }),
+          0
+        )
+      ])
+    ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Big Url")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Short Url")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Created At")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -51143,8 +51193,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\kapil\Desktop\laravel\shortner_url\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\kapil\Desktop\laravel\shortner_url\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Admin\Desktop\laravel\shorten_url\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Admin\Desktop\laravel\shorten_url\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
