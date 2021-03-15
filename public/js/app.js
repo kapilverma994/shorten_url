@@ -2201,7 +2201,20 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     submit: function submit() {
-      console.log("login");
+      var _this = this;
+
+      axios.post('/login', this.form).then(function (res) {
+        _this.$router.push("/"); //   console.log(res.data);
+
+
+        _this.$notify({
+          message: "Login Successfully 😍",
+          duration: 3000,
+          position: 'center'
+        });
+      })["catch"](function (e) {
+        console.log(e.response);
+      });
     }
   }
 });
@@ -2260,7 +2273,14 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post('/register', this.form).then(function (res) {
         _this.form = "";
-        console.log(res.data);
+
+        _this.$router.push("/"); //   console.log(res.data);
+        //    this.$notify({
+        //       message: "Register Successfully 😍",
+        //       duration: 3000,
+        //       position: 'center',
+        //     });
+
       })["catch"](function (e) {
         console.log(e.response.data.errors);
       });

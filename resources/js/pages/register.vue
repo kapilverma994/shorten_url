@@ -41,7 +41,14 @@ export default {
                   axios.post('/register',this.form)
   .then((res)=> {
       this.form="";
-      console.log(res.data);
+      this.$router.push("/");
+    //   console.log(res.data);
+    //    this.$notify({
+    //       message: "Register Successfully 😍",
+    //       duration: 3000,
+    //       position: 'center',
+      
+    //     });
 }).catch((e)=>{
     console.log(e.response.data.errors);
   })
