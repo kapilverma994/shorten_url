@@ -41,7 +41,7 @@
    methods:{
      logout(){
        axios.post('/logout').then(()=>{
-       this.$router.go( this.$router.push("/")) ; 
+      window.location="/login" ; 
     //   console.log(res.data);
    
 

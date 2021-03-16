@@ -35,7 +35,7 @@ export default {
                   axios.post('/login',this.form)
   .then((res)=> {
  
-    this.$router.go( this.$router.push("/")) ; 
+  window.location="/" ;
     //   console.log(res.data);
   
 }).catch((e)=>{
