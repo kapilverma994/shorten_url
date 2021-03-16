@@ -18,6 +18,8 @@ class CreateUrlsTable extends Migration
             $table->text('original_url');
             $table->string('short_url')->unique();
       $table->unsignedBigInteger('visit')->default(0);
+      $table->unsignedBigInteger('user_id')->default(0);
+
             $table->timestamps();
         });
     }

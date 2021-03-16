@@ -15,7 +15,7 @@ class UrlController extends Controller
      */
     public function index()
     {
-     $url= Url::latest()->get();
+     $url= Url::where('user_id',auth()->id)->latest()->get();
      return response($url);
     }
 

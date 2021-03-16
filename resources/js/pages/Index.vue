@@ -13,7 +13,7 @@
 <span class="text-danger" style="font-size:20px" v-if="errors.original_url"> {{errors.original_url[0]}}</span>
 </div>
 <section class="mt-2 container p-5 ">
-    <table class="table table-bordered">
+    <table class="table table-bordered" v-if="items.length>0">
 <thead>
     <tr class="">
     <th>Big Url</th>
@@ -40,6 +40,10 @@
     </tr>
 </tbody>
     </table>
+    <div class="text-center" v-else>
+        <h2 class="text-danger">No data found</h2>
+
+    </div>
 <!-- <div  v-for="item in items" :key="item.id">
    <p>{{item.original_url}}</p> 
    <p>{{item.short_url}}</p> 
@@ -53,6 +57,7 @@
 <script>
 
 export default {
+    middleware:"auth",
   data(){
      
       
@@ -69,7 +74,7 @@ this.fetchData();
         submit(){
              if(this.original_url=="")
           return;
-        axios.post('api/url',{original_url:this.original_url})
+        axios.post('api/url',{original_url:this.original_url,user_id:window.user.id})
   .then((res)=> {
       this.original_url="";
       console.log(res.data);

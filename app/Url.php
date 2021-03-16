@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class Url extends Model
 {
-    protected $fillable=['original_url','short_url'];
+    protected $fillable=['original_url','short_url','user_id'];
 protected $appends=['path'];
     protected static function boot(){
         parent::boot();

@@ -8,9 +8,12 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
-        <div v-if="loggedin">
+        <div v-if="loggedin"  style=" display: inherit;">
+               <li class="nav-item active">
+             <a class="nav-link" >Hi, {{user.name}}</a>
+              </li>
            <li class="nav-item active">
-             
+       
           <a class="nav-link" href="" @click.prevent="logout">Logout</a>
           <!-- <a class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a> -->
         </li>
@@ -37,7 +40,7 @@
    data(){
      return {
        loggedin:window.loggedin, 
-       username:window.username
+       user:window.user
      };
    },
    methods:{

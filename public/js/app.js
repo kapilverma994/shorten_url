@@ -2043,11 +2043,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       loggedin: window.loggedin,
-      username: window.username
+      user: window.user
     };
   },
   methods: {
@@ -2122,7 +2125,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  middleware: "auth",
   data: function data() {
     return {
       original_url: "",
@@ -2139,7 +2147,8 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.original_url == "") return;
       axios.post('api/url', {
-        original_url: this.original_url
+        original_url: this.original_url,
+        user_id: window.user.id
       }).then(function (res) {
         _this.original_url = "";
         console.log(res.data);
@@ -2215,6 +2224,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  middleware: "guest",
   data: function data() {
     return {
       form: {
@@ -2272,6 +2282,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  middleware: "guest",
   data: function data() {
     return {
       form: {
@@ -44177,7 +44188,13 @@ var render = function() {
         [
           _c("ul", { staticClass: "navbar-nav ml-auto" }, [
             _vm.loggedin
-              ? _c("div", [
+              ? _c("div", { staticStyle: { display: "inherit" } }, [
+                  _c("li", { staticClass: "nav-item active" }, [
+                    _c("a", { staticClass: "nav-link" }, [
+                      _vm._v("Hi, " + _vm._s(_vm.user.name))
+                    ])
+                  ]),
+                  _vm._v(" "),
                   _c("li", { staticClass: "nav-item active" }, [
                     _c(
                       "a",
@@ -44331,60 +44348,64 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("section", { staticClass: "mt-2 container p-5 " }, [
-      _c("table", { staticClass: "table table-bordered" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.items, function(item) {
-            return _c("tr", { key: item.id }, [
-              _c("td", [
-                _vm._v(
-                  "\n          \n            " +
-                    _vm._s(item.original_url) +
-                    "\n           \n            "
-                )
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _c(
-                  "a",
-                  {
-                    staticClass: "text-dark",
-                    staticStyle: { "text-decoration": "none" },
-                    attrs: { href: item.path, target: "_blank" }
-                  },
-                  [
-                    _vm._v("\n            " + _vm._s(item.short_url)),
+      _vm.items.length > 0
+        ? _c("table", { staticClass: "table table-bordered" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.items, function(item) {
+                return _c("tr", { key: item.id }, [
+                  _c("td", [
+                    _vm._v(
+                      "\n          \n            " +
+                        _vm._s(item.original_url) +
+                        "\n           \n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "text-dark",
+                        staticStyle: { "text-decoration": "none" },
+                        attrs: { href: item.path, target: "_blank" }
+                      },
+                      [
+                        _vm._v("\n            " + _vm._s(item.short_url)),
+                        _c("i", {
+                          staticClass: "fa fa-external-link ml-2",
+                          attrs: { "aria-hidden": "true" }
+                        })
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.visit))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(item.created_at))]),
+                  _vm._v(" "),
+                  _c("td", [
                     _c("i", {
-                      staticClass: "fa fa-external-link ml-2",
-                      attrs: { "aria-hidden": "true" }
+                      staticClass: "fa fa-times text-danger fa-2x",
+                      staticStyle: { cursor: "pointer" },
+                      attrs: { "aria-hidden": "true" },
+                      on: {
+                        click: function($event) {
+                          return _vm.destroy(item)
+                        }
+                      }
                     })
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(item.visit))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(item.created_at))]),
-              _vm._v(" "),
-              _c("td", [
-                _c("i", {
-                  staticClass: "fa fa-times text-danger fa-2x",
-                  staticStyle: { cursor: "pointer" },
-                  attrs: { "aria-hidden": "true" },
-                  on: {
-                    click: function($event) {
-                      return _vm.destroy(item)
-                    }
-                  }
-                })
-              ])
-            ])
-          }),
-          0
-        )
-      ])
+                  ])
+                ])
+              }),
+              0
+            )
+          ])
+        : _c("div", { staticClass: "text-center" }, [
+            _c("h2", { staticClass: "text-danger" }, [_vm._v("No data found")])
+          ])
     ])
   ])
 }
@@ -60539,6 +60560,23 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   // short for `routes: routes`
   hashbang: false,
   mode: "history"
+});
+router.beforeEach(function (to, from, next) {
+  var middleware = to.matched[0].components["default"].middleware;
+
+  if (middleware == "guest") {
+    if (window.loggedin) {
+      next("/");
+    }
+  }
+
+  if (middleware == "auth") {
+    if (!window.loggedin) {
+      next("/login");
+    }
+  }
+
+  next();
 });
 /* harmony default export */ __webpack_exports__["default"] = (router);
 

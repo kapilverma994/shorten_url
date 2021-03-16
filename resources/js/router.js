@@ -15,12 +15,27 @@ const routes = [
 
   ]
 
-  
+ 
   
   const router = new VueRouter({
     routes, // short for `routes: routes`
    hashbang:false,
    mode:"history"  
 })   
+router.beforeEach((to, from, next) => {
+ let middleware=to.matched[0].components.default.middleware;
+ if(middleware=="guest"){
+   if(window.loggedin){
+        next("/");
+   }
+ }
+ if(middleware=="auth"){
+  if(!window.loggedin){
+       next("/login");
+  }
+}
 
+
+    next();
+})
   export default router;
