@@ -20,4 +20,4 @@ Route::get('/', function () {
 Route::view("{url}","Welcome");
 Route::post('/register','Auth\RegisterController@register');
 Route::post('/login','Auth\LoginController@login');
-Route::get('/logout','Auth\LoginController@logout');
+Route::post('/logout','Auth\LoginController@logout');

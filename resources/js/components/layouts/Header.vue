@@ -10,12 +10,12 @@
       <ul class="navbar-nav ml-auto">
         <div v-if="loggedin">
            <li class="nav-item active">
-          <a class="nav-link" href="/logout">Logout</a>
+          <a class="nav-link" href="" @click.prevent="logout">Logout</a>
           <!-- <a class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a> -->
         </li>
 
         </div>
-        <div v-else>
+        <div style=" display: inherit;" v-else>
         <li class="nav-item active">
           <router-link class="nav-link" to="/login">Login</router-link>
           <!-- <a class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a> -->
@@ -37,6 +37,16 @@
      return {
        loggedin:window.loggedin 
      };
+   },
+   methods:{
+     logout(){
+       axios.post('/logout').then(()=>{
+       this.$router.go( this.$router.push("/")) ; 
+    //   console.log(res.data);
+   
+
+       })
+     }
    }
  }
  </script>

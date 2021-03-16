@@ -35,14 +35,9 @@ export default {
                   axios.post('/login',this.form)
   .then((res)=> {
  
-      this.$router.push("/");
+    this.$router.go( this.$router.push("/")) ; 
     //   console.log(res.data);
-       this.$notify({
-          message: "Login Successfully 😍",
-          duration: 3000,
-          position: 'center',
-      
-        });
+  
 }).catch((e)=>{
     console.log(e.response);
   })

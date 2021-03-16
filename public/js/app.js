@@ -2047,6 +2047,16 @@ __webpack_require__.r(__webpack_exports__);
     return {
       loggedin: window.loggedin
     };
+  },
+  methods: {
+    logout: function logout() {
+      var _this = this;
+
+      axios.post('/logout').then(function () {
+        _this.$router.go(_this.$router.push("/")); //   console.log(res.data);
+
+      });
+    }
   }
 });
 
@@ -2219,14 +2229,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.post('/login', this.form).then(function (res) {
-        _this.$router.push("/"); //   console.log(res.data);
+        _this.$router.go(_this.$router.push("/")); //   console.log(res.data);
 
-
-        _this.$notify({
-          message: "Login Successfully 😍",
-          duration: 3000,
-          position: 'center'
-        });
       })["catch"](function (e) {
         console.log(e.response);
       });
@@ -44177,8 +44181,25 @@ var render = function() {
         [
           _c("ul", { staticClass: "navbar-nav ml-auto" }, [
             _vm.loggedin
-              ? _c("div", [_vm._m(1)])
-              : _c("div", [
+              ? _c("div", [
+                  _c("li", { staticClass: "nav-item active" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "nav-link",
+                        attrs: { href: "" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.logout($event)
+                          }
+                        }
+                      },
+                      [_vm._v("Logout")]
+                    )
+                  ])
+                ])
+              : _c("div", { staticStyle: { display: "inherit" } }, [
                   _c(
                     "li",
                     { staticClass: "nav-item active" },
@@ -44232,16 +44253,6 @@ var staticRenderFns = [
       },
       [_c("span", { staticClass: "navbar-toggler-icon" })]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "nav-item active" }, [
-      _c("a", { staticClass: "nav-link", attrs: { href: "/logout" } }, [
-        _vm._v("Logout")
-      ])
-    ])
   }
 ]
 render._withStripped = true
