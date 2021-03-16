@@ -10,6 +10,7 @@
       <ul class="navbar-nav ml-auto">
         <div v-if="loggedin">
            <li class="nav-item active">
+             
           <a class="nav-link" href="" @click.prevent="logout">Logout</a>
           <!-- <a class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a> -->
         </li>
@@ -35,7 +36,8 @@
  export default {
    data(){
      return {
-       loggedin:window.loggedin 
+       loggedin:window.loggedin, 
+       username:window.username
      };
    },
    methods:{

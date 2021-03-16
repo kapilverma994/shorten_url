@@ -2042,19 +2042,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      loggedin: window.loggedin
+      loggedin: window.loggedin,
+      username: window.username
     };
   },
   methods: {
     logout: function logout() {
-      var _this = this;
-
       axios.post('/logout').then(function () {
-        _this.$router.go(_this.$router.push("/")); //   console.log(res.data);
-
+        window.location = "/login"; //   console.log(res.data);
       });
     }
   }
@@ -2226,11 +2225,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     submit: function submit() {
-      var _this = this;
-
       axios.post('/login', this.form).then(function (res) {
-        _this.$router.go(_this.$router.push("/")); //   console.log(res.data);
-
+        window.location = "/"; //   console.log(res.data);
       })["catch"](function (e) {
         console.log(e.response);
       });

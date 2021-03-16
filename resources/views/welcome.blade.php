@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="{{asset('css/app.css')}}">
  <script>
      window.loggedin={{Auth::check()}}
+    window.username= {{Auth::user()->name}}
  </script>
     </head>
     <body>
