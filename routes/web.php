@@ -19,7 +19,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::view("{url}","Welcome");
+// Route::any('{url}', function () {
+//     return view('welcome');
+    
+// })->where('url','.*');
 
 Route::post('/register','Auth\RegisterController@register');
 Route::post('/login','Auth\LoginController@login');
 Route::post('/logout','Auth\LoginController@logout');
+Route::post('/password/email','Auth\ForgotPasswordController@sendResetLinkEmail');
+Route::post('/password/reset','Auth\ResetPasswordController@reset');
+
+Auth::routes();
+
+

@@ -9,11 +9,13 @@ import Login  from "./pages/login";
 
 import Register  from "./pages/register"; 
 import ForgetPassword  from "./pages/forget-password"; 
+import ResetPassword  from "./pages/reset-password"; 
 const routes = [
     { path: '/', component: Index },
     { path: '/login', component: Login },
     { path: '/register', component: Register },
     { path: '/forget-password', component: ForgetPassword  },
+    { path: '/password/reset/:token', component: ResetPassword  },
   ]
 
  

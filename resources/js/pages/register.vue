@@ -39,11 +39,12 @@ export default {
     },
     methods:{
         submit(){
+            // console.log("hii");
                   axios.post('/register',this.form)
   .then((res)=> {
       this.form="";
-      this.$router.push("/");
-    //   console.log(res.data);
+    //   this.$router.push("/");
+      console.log(res.data);
     //    this.$notify({
     //       message: "Register Successfully 😍",
     //       duration: 3000,
