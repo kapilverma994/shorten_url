@@ -8,11 +8,12 @@ import Index  from "./pages/Index";
 import Login  from "./pages/login"; 
 
 import Register  from "./pages/register"; 
+import ForgetPassword  from "./pages/forget-password"; 
 const routes = [
     { path: '/', component: Index },
     { path: '/login', component: Login },
     { path: '/register', component: Register },
-
+    { path: '/forget-password', component: ForgetPassword  },
   ]
 
  

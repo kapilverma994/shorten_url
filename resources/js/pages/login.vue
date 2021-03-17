@@ -12,6 +12,11 @@
               <input type="password" v-model="form.password" class="form-control" placeholder="password">
 
           </div>
+          <div class="form-group float-left">
+              <router-link to="/forget-password">
+  Forget Password</router-link>
+          </div>
+        
        <button type="submit" class="btn btn-primary btn-block">Login</button>
       </form>
 
