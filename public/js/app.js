@@ -2129,13 +2129,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   middleware: "auth",
   data: function data() {
     return {
       original_url: "",
       errors: {},
-      items: []
+      items: {
+        data: []
+      }
     };
   },
   mounted: function mounted() {
@@ -2163,11 +2179,25 @@ __webpack_require__.r(__webpack_exports__);
         _this.errors = e.response.data.errors;
       });
     },
+    copyToClip: function copyToClip(url) {
+      navigator.clipboard.writeText(url);
+    },
+    next: function next() {
+      if (this.items.current_page == this.items.last_page) return;
+      var nextpage = this.items.current_page + 1;
+      this.fetchData(nextpage);
+    },
+    prev: function prev() {
+      var prevpage = this.items.current_page - 1;
+      if (prevpage == 0) return;
+      this.fetchData(prevpage);
+    },
     fetchData: function fetchData() {
       var _this2 = this;
 
-      axios.get('/url').then(function (res) {
-        console.log(res.data);
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      axios.get("/url?page=".concat(page)).then(function (res) {
+        //    console.log(res.data.data)
         _this2.items = res.data;
       })["catch"](function (e) {
         _this2.errors = e.response.data;
@@ -44478,60 +44508,112 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("section", { staticClass: "mt-2 container p-5 " }, [
-      _vm.items.length > 0
-        ? _c("table", { staticClass: "table table-bordered" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.items, function(item) {
-                return _c("tr", { key: item.id }, [
-                  _c("td", [
-                    _vm._v(
-                      "\n          \n            " +
-                        _vm._s(item.original_url) +
-                        "\n           \n            "
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "text-dark",
-                        staticStyle: { "text-decoration": "none" },
-                        attrs: { href: item.path, target: "_blank" }
-                      },
-                      [
-                        _vm._v("\n            " + _vm._s(item.short_url)),
-                        _c("i", {
-                          staticClass: "fa fa-external-link ml-2",
-                          attrs: { "aria-hidden": "true" }
-                        })
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(item.visit))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(item.created_at))]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("i", {
-                      staticClass: "fa fa-times text-danger fa-2x",
-                      staticStyle: { cursor: "pointer" },
-                      attrs: { "aria-hidden": "true" },
-                      on: {
-                        click: function($event) {
-                          return _vm.destroy(item)
+      _vm.items.data.length > 0
+        ? _c("div", [
+            _c("table", { staticClass: "table table-bordered" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.items.data, function(item) {
+                  return _c("tr", { key: item.id }, [
+                    _c("td", [
+                      _vm._v(
+                        "\n          \n            " +
+                          _vm._s(item.original_url) +
+                          "\n           \n            "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "span",
+                        {
+                          staticStyle: { cursor: "pointer" },
+                          on: {
+                            click: function($event) {
+                              return _vm.copyToClip(item.path)
+                            }
+                          }
+                        },
+                        [_vm._v("   " + _vm._s(item.path))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "text-dark",
+                          staticStyle: { "text-decoration": "none" },
+                          attrs: { href: item.path, target: "_blank" }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fa fa-external-link ml-2",
+                            attrs: { "aria-hidden": "true" }
+                          })
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.visit))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.created_at))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("i", {
+                        staticClass: "fa fa-times text-danger fa-2x",
+                        staticStyle: { cursor: "pointer" },
+                        attrs: { "aria-hidden": "true" },
+                        on: {
+                          click: function($event) {
+                            return _vm.destroy(item)
+                          }
                         }
-                      }
-                    })
+                      })
+                    ])
                   ])
-                ])
-              }),
-              0
-            )
+                }),
+                0
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "d-flex justify-content-between " }, [
+              _c(
+                "button",
+                {
+                  class:
+                    _vm.items.current_page == 1
+                      ? "disabled"
+                      : "btn btn-primary",
+                  attrs: { type: "submit" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.prev($event)
+                    }
+                  }
+                },
+                [_vm._v("<<")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  class:
+                    _vm.items.current_page == _vm.items.last_page
+                      ? "disabled"
+                      : "btn btn-primary",
+                  attrs: { type: "submit" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.next($event)
+                    }
+                  }
+                },
+                [_vm._v(">>")]
+              )
+            ])
           ])
         : _c("div", { staticClass: "text-center" }, [
             _c("h2", { staticClass: "text-danger" }, [_vm._v("No data found")])

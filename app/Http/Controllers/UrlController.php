@@ -15,7 +15,7 @@ class UrlController extends Controller
      */
     public function index()
     {
-        return auth()->user()->urls;
+        return auth()->user()->urls()->paginate(1);
 //   return Url::where('user_id',auth()->id())->latest()->get();
 
  
