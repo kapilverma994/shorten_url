@@ -68,13 +68,14 @@ export default {
       };
   },
   mounted(){
+      
 this.fetchData();
   },    
     methods:{
         submit(){
              if(this.original_url=="")
           return;
-        axios.post('api/url',{original_url:this.original_url,user_id:window.user.id})
+        axios.post('/url',{original_url:this.original_url})
   .then((res)=> {
       this.original_url="";
       console.log(res.data);
@@ -90,16 +91,17 @@ this.fetchData();
   })
         },
         fetchData(){
-            axios.get('api/url').then((res)=>{
-               
+            axios.get('/url').then((res)=>{
+               console.log(res.data)
                 this.items=res.data;
             }).catch((e)=>{
-                this.errors=e.response.data;
+               this.errors=e.response.data;
+              
             });
         },
         destroy(item){
             if(confirm("Are You Sure ?")){
-        axios.delete(`api/url/${item.short_url}`).then(()=>{
+        axios.delete(`url/${item.short_url}`).then(()=>{
                 this.items= this.items.filter(i=>i.id!=item.id);
             });
                this.$notify({

@@ -2146,9 +2146,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (this.original_url == "") return;
-      axios.post('api/url', {
-        original_url: this.original_url,
-        user_id: window.user.id
+      axios.post('/url', {
+        original_url: this.original_url
       }).then(function (res) {
         _this.original_url = "";
         console.log(res.data);
@@ -2167,7 +2166,8 @@ __webpack_require__.r(__webpack_exports__);
     fetchData: function fetchData() {
       var _this2 = this;
 
-      axios.get('api/url').then(function (res) {
+      axios.get('/url').then(function (res) {
+        console.log(res.data);
         _this2.items = res.data;
       })["catch"](function (e) {
         _this2.errors = e.response.data;
@@ -2177,7 +2177,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       if (confirm("Are You Sure ?")) {
-        axios["delete"]("api/url/".concat(item.short_url)).then(function () {
+        axios["delete"]("url/".concat(item.short_url)).then(function () {
           _this3.items = _this3.items.filter(function (i) {
             return i.id != item.id;
           });
@@ -60567,12 +60567,14 @@ router.beforeEach(function (to, from, next) {
   if (middleware == "guest") {
     if (window.loggedin) {
       next("/");
+      return;
     }
   }
 
   if (middleware == "auth") {
     if (!window.loggedin) {
       next("/login");
+      return;
     }
   }
 

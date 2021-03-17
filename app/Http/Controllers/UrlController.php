@@ -15,8 +15,10 @@ class UrlController extends Controller
      */
     public function index()
     {
-     $url= Url::where('user_id',auth()->id)->latest()->get();
-     return response($url);
+        return auth()->user()->urls;
+//   return Url::where('user_id',auth()->id())->latest()->get();
+
+ 
     }
 
     /**
@@ -38,7 +40,7 @@ class UrlController extends Controller
     public function store(UrlRequest $request)
     {
     
-      $url=  Url::create($request->all()); 
+      $url=  auth()->user()->urls()->create($request->all()); 
         return response($url,200);
     }
 

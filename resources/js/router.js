@@ -27,11 +27,13 @@ router.beforeEach((to, from, next) => {
  if(middleware=="guest"){
    if(window.loggedin){
         next("/");
+        return;
    }
  }
  if(middleware=="auth"){
   if(!window.loggedin){
        next("/login");
+       return;
   }
 }
 
